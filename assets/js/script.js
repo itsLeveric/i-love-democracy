@@ -98,7 +98,7 @@ function processInput(e) {
 			start = end;
 
 			while ((start < inputMe.length - 1) && (inputMe[start] === " ")) {
-				start+;
+				start++;
 			}
 
 			end = start + 251 - textPrefix.length;

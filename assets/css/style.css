@@ -179,23 +179,27 @@ textarea {
 }
 
 #rankTable {
-	background-image: url('../images/greebling.png'), linear-gradient(#400000, #400000, #300000);
-	border: solid 1px #200000;
-	display: grid;
-	grid-template-columns: auto repeat(4, min-content); /* 1 wide col + 4 content cols */
-	width: 600px;
+  display: grid;
+  grid-template-columns: 1fr repeat(4, minmax(40px, max-content)); /* 1 flexible + 4 content columns */
+  grid-auto-rows: minmax(28px, auto);
+  width: 600px; /* or width: 100%; max-width:600px; */
+  background-image: url('../images/greebling.png'), linear-gradient(#400000,#400000,#300000);
+  border: 1px solid #200000;
+  box-sizing: border-box;
 }
 
 #rankTable > div {
-	border: solid 1px #200000;
-	padding: 2px 8px;
-	white-space: nowrap;
+  border: 1px solid #200000;
+  padding: 6px 8px;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
-#rankTable > div:nth-child(-n+5) { /* style first 5 cells (header row) */
-	background-color: #300000;
-	font-weight: bold;
-	padding-top: 4px;
+/* style header row (first 5 direct children) */
+#rankTable > div:nth-child(-n+5) {
+  background-color: #300000;
+  color: #fff;
+  font-weight: 700;
 }
 
 #sithCode {

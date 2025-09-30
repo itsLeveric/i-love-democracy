@@ -182,7 +182,7 @@ textarea {
 	background-image: url('../images/greebling.png'), linear-gradient(#400000, #400000, #300000);
 	border: solid 1px #200000;
 	display: grid;
-	grid-template-columns: auto repeat(3, min-content);
+	grid-template-columns: auto repeat(4, min-content);
 	width: 600px;
 }
 

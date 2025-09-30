@@ -182,7 +182,7 @@ textarea {
 	background-image: url('../images/greebling.png'), linear-gradient(#400000, #400000, #300000);
 	border: solid 1px #200000;
 	display: grid;
-	grid-template-columns: auto repeat(4, min-content);
+	grid-template-columns: auto repeat(4, min-content); /* 1 wide col + 4 content cols */
 	width: 600px;
 }
 
@@ -192,7 +192,7 @@ textarea {
 	white-space: nowrap;
 }
 
-#rankTable > div:first-child, #rankTable > div:nth-child(2), #rankTable > div:nth-child(3), #rankTable > div:nth-child(4) {
+#rankTable > div:nth-child(-n+5) { /* style first 5 cells (header row) */
 	background-color: #300000;
 	font-weight: bold;
 	padding-top: 4px;

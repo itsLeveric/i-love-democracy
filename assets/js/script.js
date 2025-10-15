@@ -272,4 +272,23 @@ document.addEventListener("DOMContentLoaded", () => {
   updateBar();
 });
 
+// === Damage Calculator ===
+document.getElementById('calcDamageBtn').addEventListener('click', () => {
+  const yourRoll = parseInt(document.getElementById('yourRoll').value) || 0;
+  const enemyRoll = parseInt(document.getElementById('enemyRoll').value) || 0;
+  const crit = document.getElementById('critCheck').checked;
+
+  let damage = 0;
+
+  if (yourRoll > enemyRoll) {
+    damage = 1; // base damage for winning
+    if (crit) damage += 1; // +1 for natural crit
+    const diff = yourRoll - enemyRoll;
+    damage += Math.floor(diff / 10); // +1 per 10-point difference
+  }
+
+  document.getElementById('damageResult').textContent = `Damage: ${damage}`;
+});
+
 initializeSections();
+

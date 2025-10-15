@@ -23,7 +23,30 @@
     <div id="hpBar"></div>
   </div>
 </section>
+<!-- Damage Calculator Section -->
+<div id="damageCalc" class="tracker-section">
+  <h3>Damage Calculator</h3>
 
+  <div class="damage-inputs">
+    <div class="input-group">
+      <label for="yourRoll">Your Roll Total</label>
+      <input type="number" id="yourRoll" min="0" placeholder="e.g. 40">
+    </div>
+
+    <div class="input-group">
+      <label for="enemyRoll">Enemy Roll Total</label>
+      <input type="number" id="enemyRoll" min="0" placeholder="e.g. 11">
+    </div>
+
+    <div class="input-group checkbox-group">
+      <input type="checkbox" id="critCheck">
+      <label for="critCheck">Natural Crit</label>
+    </div>
+  </div>
+
+  <button id="calcDamageBtn" class="btn-primary">Calculate Damage</button>
+  <p id="damageResult" class="result-text">Damage: —</p>
+</div>
 	<section id="textSection">
   <div class="closeButton">
     <button type="button" class="buttonSmall">-</button>

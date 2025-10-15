@@ -453,3 +453,16 @@ textarea {
 		height: auto;
 	}
 }
+
+#hpBarWrapper {
+  height: 20px !important;       /* force visible height */
+  background: #200000 !important; /* contrast background */
+  overflow: visible !important;
+}
+#hpBar {
+  height: 100% !important;
+  position: relative !important;
+  z-index: 10 !important;
+  border-radius: 4px !important;
+}
+

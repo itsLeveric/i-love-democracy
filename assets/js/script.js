@@ -164,11 +164,14 @@ notesField.addEventListener("change", () => { localStorage.setItem(noteStorageTo
 
 // === HP Tracker (no max, but can’t go below 0) with “Set HP” ===
 
-const hpValue = document.getElementById("hpValue");
-const hpPlus = document.getElementById("hpPlus");
-const hpMinus = document.getElementById("hpMinus");
-const hpSet = document.getElementById("hpSet");
-const hpBar = document.getElementById("hpBar");
+document.addEventListener("DOMContentLoaded", () => {
+  const hpValue = document.getElementById("hpValue"); 
+  const hpPlus = document.getElementById("hpPlus");
+  const hpMinus = document.getElementById("hpMinus");
+  const hpSet = document.getElementById("hpSet");
+  const hpBar = document.getElementById("hpBar");
+
+  console.log({ hpValue, hpPlus, hpMinus, hpSet, hpBar });
 
 let currentHP = 0;
 let hpInitialized = false; // track whether “Set HP” was used
@@ -253,5 +256,6 @@ if (hpValue) {
 }
 // initialize bar display
 updateBar();
+});
 
 initializeSections();

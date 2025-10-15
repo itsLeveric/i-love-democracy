@@ -3,7 +3,54 @@
 	margin: 0;
 	padding: 0;
 }
+/* === HP Tracker === */
+#hpTrackerSection {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	text-align: center;
+}
 
+#hpTracker {
+	margin-top: 10px;
+	gap: 8px;
+}
+
+#hpValue, #hpMax {
+	width: 80px;
+	text-align: center;
+	font-size: 1.1rem;
+	font-weight: bold;
+	color: #ffe080;
+	background-color: #181008;
+	border: solid 2px #403810;
+	border-radius: 6px;
+	padding: 4px;
+	text-shadow: 0 0 4px #c0a040;
+}
+
+#hpBarWrapper {
+	width: 80%;
+	height: 24px;
+	background-color: #180000;
+	border: solid 2px #600000;
+	border-radius: 12px;
+	margin-top: 10px;
+	overflow: hidden;
+	box-shadow: inset 0 0 8px #200000;
+}
+
+#hpBar {
+	height: 100%;
+	width: 0%;
+	background: linear-gradient(90deg, #800000, #c0a040);
+	box-shadow: 0 0 8px #c0a040;
+	transition: width 0.3s ease, background 0.3s ease;
+	border-radius: 10px 0 0 10px;
+}
+/* === General Styles === */
 body {
 	background-color: black;
 	color: white;

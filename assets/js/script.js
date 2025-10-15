@@ -1,5 +1,6 @@
 const noteStorageToken = "SWTORNotes";
 const sectionStorageToken = "SWTORSections";
+const hpStorageToken = "SWTORHP";
 
 var inputText = document.getElementById("inputText");
 var outputText = document.getElementById("outputText");
@@ -159,6 +160,75 @@ btnCopyOutput.addEventListener("click", () => { navigator.clipboard.writeText(ou
 
 notesField.value = localStorage.getItem(noteStorageToken);
 
-notesField.addEventListener("change", () => { localStorage.setItem(noteStorageToken, notesField.value); });
+notesField.addEventListener("change", () => { localStorage.setItem(noteStorageToken, notesField.value); })
+// === HP Tracker with Max HP and Bar ===
+const hpMaxStorageToken = "SWTORMaxHP";
+
+const hpValue = document.getElementById("hpValue");
+const hpPlus = document.getElementById("hpPlus");
+const hpMinus = document.getElementById("hpMinus");
+const hpMaxInput = document.getElementById("hpMax");
+const hpBar = document.getElementById("hpBar");
+
+if (hpValue && hpPlus && hpMinus && hpMaxInput && hpBar) {
+	let currentHP = parseInt(localStorage.getItem(hpStorageToken), 10);
+	let maxHP = parseInt(localStorage.getItem(hpMaxStorageToken), 10);
+
+	if (isNaN(currentHP)) currentHP = 0;
+	if (isNaN(maxHP) || maxHP <= 0) maxHP = 20;
+
+	function clamp(value, min, max) {
+		return Math.min(Math.max(value, min), max);
+	}
+
+	function updateHP(newHP) {
+		currentHP = clamp(newHP, 0, maxHP);
+		hpValue.value = currentHP;
+		localStorage.setItem(hpStorageToken, currentHP);
+		updateBar();
+	}
+
+	function updateMaxHP(newMax) {
+		if (newMax <= 0) newMax = 1;
+		maxHP = newMax;
+		hpMaxInput.value = maxHP;
+		localStorage.setItem(hpMaxStorageToken, maxHP);
+		updateHP(currentHP); // re-clamp HP
+	}
+
+	function updateBar() {
+		const percent = (currentHP / maxHP) * 100;
+		hpBar.style.width = `${percent}%`;
+
+		// color transitions from red (low) to gold (high)
+		if (percent < 25) {
+			hpBar.style.background = "linear-gradient(90deg, #800000, #a00000)";
+			hpBar.style.boxShadow = "0 0 6px #a00000";
+		} else if (percent < 70) {
+			hpBar.style.background = "linear-gradient(90deg, #a04000, #c09020)";
+			hpBar.style.boxShadow = "0 0 8px #c09020";
+		} else {
+			hpBar.style.background = "linear-gradient(90deg, #c0a040, #ffe080)";
+			hpBar.style.boxShadow = "0 0 10px #ffe080";
+		}
+	}
+
+	// Initialize
+	updateMaxHP(maxHP);
+	updateHP(currentHP);
+
+	hpPlus.addEventListener("click", () => updateHP(currentHP + 1));
+	hpMinus.addEventListener("click", () => updateHP(currentHP - 1));
+
+	hpValue.addEventListener("input", e => {
+		const val = parseInt(e.target.value, 10);
+		if (!isNaN(val)) updateHP(val);
+	});
+
+	hpMaxInput.addEventListener("input", e => {
+		const val = parseInt(e.target.value, 10);
+		if (!isNaN(val)) updateMaxHP(val);
+	});
+}
 
 initializeSections();

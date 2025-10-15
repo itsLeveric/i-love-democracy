@@ -509,10 +509,9 @@ textarea {
 
 /* Ensure inner bar is visible */
 #hpBar {
-  display: block !important;
-  height: 100% !important;
+  height: 100%;
   width: 0%;
   transition: width 0.4s ease, background 0.4s ease;
-  background: linear-gradient(90deg, #400000, #600000) !important;
-  box-shadow: none !important;
+  background: linear-gradient(90deg, #400000, #c0a040);
+  box-shadow: 0 0 8px #c0a040;
 }

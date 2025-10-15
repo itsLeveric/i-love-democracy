@@ -9,46 +9,52 @@
 </head>
 <body>
 	<h1>Imperial Ascension RP Helper</h1>
+	  <section id="hpTrackerSection">
+    <div class="closeButton">
+      <button type="button" class="buttonSmall">-</button>
+    </div>
+    <h2>HP Tracker</h2>
+    <div id="hpTracker" class="flexMe">
+      <button id="hpMinus" class="buttonSmall">-</button>
+      <input type="number" id="hpValue" value="0" step="1" />
+      <button id="hpPlus" class="buttonSmall">+</button>
+    </div>
+    <div id="hpBarWrapper">
+      <div id="hpBar"></div>
+    </div>
+  </section>
 	<section id="textSection">
-		<div class="closeButton">
-			<button type="button" class="buttonSmall">-</button>
-		</div>
-		<h2 class="showClosed">Text Input</h2>
-		<div id="input">
-			<h2>Text Input</h2>
-			<textarea id="inputText" placeholder="Enter your long text here..."></textarea>
-		</div>
-		<div id="output">
-			<div>
-				<h2>Text Output</h2>
-			</div>
-			<div>
-				<textarea id="outputText" readonly="true" maxlength="255" placeholder="...and it will be split into chunks you can paste into SWTOR chat!"></textarea>
-			</div>
-			<div>
-				<div>
-					<button id="btnPanelBack" type="button" class="buttonSmall" disabled="true">&lt;</button>
-					<span id="outputTracker">0/0</span>
-					<button id="btnPanelForward" type="button" class="buttonSmall" disabled="true">&gt;</button>
-				</div>
-				<button id="btnCopyOutput" type="button" disabled="true">Copy</button>
-			</div>
-		</div>
-	<section id="hpTrackerSection">
-	<div class="closeButton">
-		<button type="button" class="buttonSmall">-</button>
-	</div>
-	<h2>HP Tracker</h2>
+  <div class="closeButton">
+    <button type="button" class="buttonSmall">-</button>
+  </div>
+  <h2 class="showClosed">Text Input</h2>
 
-	<div id="hpTracker" class="flexMe">
-		<button id="hpMinus" class="buttonSmall">-</button>
-		<input type="number" id="hpValue" value="0" step="1" />
-		<button id="hpPlus" class="buttonSmall">+</button>
-	</div>
+  <!-- Wrap the input + output into a flex wrapper -->
+  <div class="ioWrapper">
+    <div id="input">
+      <h2>Text Input</h2>
+      <textarea id="inputText" placeholder="Enter your long text here..."></textarea>
+    </div>
 
-	<div id="hpBarWrapper">
-		<div id="hpBar"></div>
-	</div>
+    <div id="output">
+      <div>
+        <h2>Text Output</h2>
+      </div>
+      <div>
+        <textarea id="outputText" readonly="true" maxlength="255"
+          placeholder="...and it will be split into chunks you can paste into SWTOR chat!"></textarea>
+      </div>
+      <div>
+        <div>
+          <button id="btnPanelBack" type="button" class="buttonSmall" disabled="true">&lt;</button>
+          <span id="outputTracker">0/0</span>
+          <button id="btnPanelForward" type="button" class="buttonSmall" disabled="true">&gt;</button>
+        </div>
+        <button id="btnCopyOutput" type="button" disabled="true">Copy</button>
+      </div>
+    </div>
+  </div>
+</section>
 	</section>
 	<section id="notesSection">
 		<div class="closeButton">

@@ -453,16 +453,30 @@ textarea {
 		height: auto;
 	}
 }
-
-#hpBarWrapper {
-  height: 20px !important;       /* force visible height */
-  background: #200000 !important; /* contrast background */
-  overflow: visible !important;
+/* === HP Tracker Bar Styles === */
+#hpTrackerSection {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: #200000;
+  border: 2px solid #600000;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 20px;
 }
+
+#hpBarContainer {
+  width: 100%;
+  height: 20px;
+  background: #100000;
+  border: 1px solid #400000;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
 #hpBar {
-  height: 100% !important;
-  position: relative !important;
-  z-index: 10 !important;
-  border-radius: 4px !important;
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease, background 0.4s ease;
 }
-

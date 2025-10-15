@@ -57,7 +57,7 @@ function setCurrentPanel(newPanel) {
 
 function processInput(e) {
 	if (e.target.value) {
-		textPrefix = "/s ";
+		textPrefix = "/e ";
 		var inputMe = e.target.value;
 		textChunks = [];
 

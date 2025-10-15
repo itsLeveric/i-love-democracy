@@ -12,7 +12,8 @@
   height: auto;
   justify-content: flex-start;
   align-items: stretch;
-  overflow: hidden;
+  overflow: visible;       /* allow children to expand beyond bounds */
+  flex: 1 1 auto;
 }
 
 .ioWrapper {
@@ -23,8 +24,8 @@
 }
 
 #input, #output {
-  flex: 1 1 0;
-  margin: 10px;
+  flex: 1 1 auto;
+  margin: 6px;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -35,8 +36,8 @@
   flex: 1 1 auto;
   width: 100%;
   min-height: 0;
-  max-height: 60vh;   /* limit how tall they can get */
-  overflow: auto;     /* scroll only when necessary */
+  max-height: none;
+  overflow: auto;
 }
 
 /* Space between the HP tracker (above) and the text section */

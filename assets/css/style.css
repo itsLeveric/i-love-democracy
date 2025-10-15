@@ -470,20 +470,41 @@ textarea {
   max-height: none;
 }
 
-/* === Center HP tracker === */
+/* Center the HP tracker section */
 #hpTrackerSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;      /* center children horizontally */
-  width: fit-content;        /* shrink to content width so margin auto works */
-  margin: 0 auto 20px;       /* center section in page, with bottom margin */
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;       /* center children horizontally */
+  width: fit-content !important;         /* shrink to content width */
+  margin: 0 auto 20px !important;        /* center section with bottom margin */
 }
 
-/* Center the controls row inside the HP tracker */
-#hpTrackerSection #hpTrackerControls,
+/* Center the controls row inside HP tracker */
+#hpTrackerControls,
 #hpTrackerSection .flexMe {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px; /* optional spacing between controls */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* Ensure bar container visible and has height */
+#hpBarContainer {
+  width: 100% !important;
+  height: 20px !important;
+  background: #100000 !important;
+  border: 1px solid #400000 !important;
+  border-radius: 10px !important;
+  overflow: visible !important;
+  margin-top: 8px !important;
+}
+
+/* Ensure inner bar is visible and styled */
+#hpBar {
+  display: block !important;
+  height: 100% !important;
+  width: 0% !important; /* JS will override */
+  transition: width 0.4s ease, background 0.4s ease;
+  background: linear-gradient(90deg, #400000, #600000) !important;
+  box-shadow: none !important;
 }

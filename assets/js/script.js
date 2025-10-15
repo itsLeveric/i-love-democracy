@@ -161,74 +161,97 @@ btnCopyOutput.addEventListener("click", () => { navigator.clipboard.writeText(ou
 notesField.value = localStorage.getItem(noteStorageToken);
 
 notesField.addEventListener("change", () => { localStorage.setItem(noteStorageToken, notesField.value); })
-// === HP Tracker with Max HP and Bar ===
-const hpMaxStorageToken = "SWTORMaxHP";
+
+// === HP Tracker (no max, but can’t go below 0) with “Set HP” ===
 
 const hpValue = document.getElementById("hpValue");
 const hpPlus = document.getElementById("hpPlus");
 const hpMinus = document.getElementById("hpMinus");
-const hpMaxInput = document.getElementById("hpMax");
+const hpSet = document.getElementById("hpSet");
 const hpBar = document.getElementById("hpBar");
 
-if (hpValue && hpPlus && hpMinus && hpMaxInput && hpBar) {
-	let currentHP = parseInt(localStorage.getItem(hpStorageToken), 10);
-	let maxHP = parseInt(localStorage.getItem(hpMaxStorageToken), 10);
+let currentHP = 0;
+let hpInitialized = false; // track whether “Set HP” was used
 
-	if (isNaN(currentHP)) currentHP = 0;
-	if (isNaN(maxHP) || maxHP <= 0) maxHP = 20;
-
-	function clamp(value, min, max) {
-		return Math.min(Math.max(value, min), max);
-	}
-
-	function updateHP(newHP) {
-		currentHP = clamp(newHP, 0, maxHP);
-		hpValue.value = currentHP;
-		localStorage.setItem(hpStorageToken, currentHP);
-		updateBar();
-	}
-
-	function updateMaxHP(newMax) {
-		if (newMax <= 0) newMax = 1;
-		maxHP = newMax;
-		hpMaxInput.value = maxHP;
-		localStorage.setItem(hpMaxStorageToken, maxHP);
-		updateHP(currentHP); // re-clamp HP
-	}
-
-	function updateBar() {
-		const percent = (currentHP / maxHP) * 100;
-		hpBar.style.width = `${percent}%`;
-
-		// color transitions from red (low) to gold (high)
-		if (percent < 25) {
-			hpBar.style.background = "linear-gradient(90deg, #800000, #a00000)";
-			hpBar.style.boxShadow = "0 0 6px #a00000";
-		} else if (percent < 70) {
-			hpBar.style.background = "linear-gradient(90deg, #a04000, #c09020)";
-			hpBar.style.boxShadow = "0 0 8px #c09020";
-		} else {
-			hpBar.style.background = "linear-gradient(90deg, #c0a040, #ffe080)";
-			hpBar.style.boxShadow = "0 0 10px #ffe080";
-		}
-	}
-
-	// Initialize
-	updateMaxHP(maxHP);
-	updateHP(currentHP);
-
-	hpPlus.addEventListener("click", () => updateHP(currentHP + 1));
-	hpMinus.addEventListener("click", () => updateHP(currentHP - 1));
-
-	hpValue.addEventListener("input", e => {
-		const val = parseInt(e.target.value, 10);
-		if (!isNaN(val)) updateHP(val);
-	});
-
-	hpMaxInput.addEventListener("input", e => {
-		const val = parseInt(e.target.value, 10);
-		if (!isNaN(val)) updateMaxHP(val);
-	});
+// Load saved HP
+const saved = parseInt(localStorage.getItem(hpStorageToken), 10);
+if (!isNaN(saved) && saved >= 0) {
+  currentHP = saved;
+  hpInitialized = true;
 }
+
+// Function to update the bar & display
+function updateBar() {
+  // If not initialized yet, make bar width zero
+  if (!hpInitialized) {
+    hpBar.style.width = "0%";
+    hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
+    return;
+  }
+  // We need a method to decide percentage fill (since no max).
+  // One option: treat HP as a scale (e.g. first 100 HP “full bar”), or use log scale
+  const percent = Math.min(100, (Math.log10(currentHP + 1) / 2) * 100);
+  hpBar.style.width = `${percent}%`;
+
+  if (currentHP === 0) {
+    hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
+    hpBar.style.boxShadow = "0 0 5px #600000";
+  } else if (percent < 25) {
+    hpBar.style.background = "linear-gradient(90deg, #800000, #a00000)";
+    hpBar.style.boxShadow = "0 0 6px #a00000";
+  } else if (percent < 70) {
+    hpBar.style.background = "linear-gradient(90deg, #a04000, #c09020)";
+    hpBar.style.boxShadow = "0 0 8px #c09020";
+  } else {
+    hpBar.style.background = "linear-gradient(90deg, #c0a040, #ffe080)";
+    hpBar.style.boxShadow = "0 0 10px #ffe080";
+  }
+}
+
+// Function to update HP value & persist
+function updateHP(newHP) {
+  currentHP = Math.max(0, newHP);
+  hpValue.value = currentHP;
+  localStorage.setItem(hpStorageToken, currentHP);
+  updateBar();
+}
+
+// Event: clicking “Set HP”
+if (hpSet) {
+  hpSet.addEventListener("click", () => {
+    const val = parseInt(hpValue.value, 10);
+    if (!isNaN(val) && val >= 0) {
+      hpInitialized = true;
+      updateHP(val);
+    }
+  });
+}
+
+// Only allow plus/minus after initialization
+if (hpPlus) {
+  hpPlus.addEventListener("click", () => {
+    if (!hpInitialized) return;
+    updateHP(currentHP + 1);
+  });
+}
+if (hpMinus) {
+  hpMinus.addEventListener("click", () => {
+    if (!hpInitialized) return;
+    updateHP(currentHP - 1);
+  });
+}
+
+// Also update when manually typing (if initialized)
+if (hpValue) {
+  hpValue.addEventListener("input", e => {
+    if (!hpInitialized) return;
+    const val = parseInt(e.target.value, 10);
+    if (!isNaN(val)) {
+      updateHP(val);
+    }
+  });
+}
+// initialize bar display
+updateBar();
 
 initializeSections();

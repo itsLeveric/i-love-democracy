@@ -3,48 +3,6 @@
 	margin: 0;
 	padding: 0;
 }
-#textSection {
-  display: flex;
-  flex-direction: column;
-  height: auto;              /* allow section to expand naturally */
-  justify-content: flex-start;  /* align to top, not center */
-  align-items: stretch;      /* let children stretch full width */
-}
-
-/* Wrapper to contain input and output side by side */
-.ioWrapper {
-  display: flex;
-  flex: 1;
-  width: 100%;
-}
-
-/* Input and output containers each flex and stack their internal content */
-#input, #output {
-  flex: 1;
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Make textareas fill available space inside their container */
-#input textarea, #output textarea {
-  flex: 1;
-  width: 100%;
-  /* height auto / flexible by flex settings above */
-}
-
-/* Override older fixed height, centering, etc. on #textSection if present */
-#textSection {
-  /* These !important rules help override conflicting earlier declarations */
-  justify-content: unset !important;
-  align-items: stretch !important;
-}
-
-/* Space between the HP tracker (above) and the text section */
-#hpTrackerSection {
-  margin-bottom: 20px;
-}
-/* === General Styles === */
 body {
 	background-color: black;
 	color: white;
@@ -452,4 +410,33 @@ textarea {
 	#emoteTable {
 		height: auto;
 	}
+}
+#textSection {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.ioWrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+#input, #output {
+  flex: 1;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+#input textarea, #output textarea {
+  flex: 1;
+  width: 100%;
+}
+#textSection {
+  justify-content: unset !important;
+  align-items: stretch !important;
+}
+#hpTrackerSection {
+  margin-bottom: 20px;
 }

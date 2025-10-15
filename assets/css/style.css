@@ -151,24 +151,6 @@ textarea {
 	resize: none;
 }
 
-/* #textSection {
-	display: flex;
-	height: 400px;
-	justify-content: center;
-}
-
-#input, #output {
-	display: flex;
-	flex-direction: column;
-	margin: 20px;
-	width: 100%;
-}
-
-#input textarea, #output textarea {
-	height: 100%;
-	width: 100%;
-}*/
-
 #output > *:nth-child(2) {
 	flex-basis: 100%;
 }
@@ -457,12 +439,14 @@ textarea {
 #hpTrackerSection {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;        /* center its children horizontally */
+  max-width: 600px;            /* optional, to limit width */
+  margin: 0 auto 20px;         /* center section, with bottom margin 20px */
   background: #200000;
   border: 2px solid #600000;
   border-radius: 6px;
   padding: 10px;
-  margin-bottom: 20px;
+  box-shadow: 0 0 10px #400000;
 }
 
 #hpBarContainer {

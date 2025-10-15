@@ -272,22 +272,34 @@ document.addEventListener("DOMContentLoaded", () => {
   updateBar();
 });
 
-// === Damage Calculator ===
 document.getElementById('calcDamageBtn').addEventListener('click', () => {
   const yourRoll = parseInt(document.getElementById('yourRoll').value) || 0;
   const enemyRoll = parseInt(document.getElementById('enemyRoll').value) || 0;
   const crit = document.getElementById('critCheck').checked;
 
   let damage = 0;
+  let resultText = "";
 
+  // Determine who wins
   if (yourRoll > enemyRoll) {
-    damage = 1; // base damage for winning
-    if (crit) damage += 1; // +1 for natural crit
+    // Player wins
+    damage = 1;
+    if (crit) damage += 1; // player crits
     const diff = yourRoll - enemyRoll;
-    damage += Math.floor(diff / 10); // +1 per 10-point difference
+    damage += Math.floor(diff / 10);
+    resultText = `You deal ${damage} damage!`;
+  } else if (enemyRoll > yourRoll) {
+    // Enemy wins
+    damage = 1;
+    const diff = enemyRoll - yourRoll;
+    damage += Math.floor(diff / 10);
+    resultText = `Enemy deals ${damage} damage to you!`;
+  } else {
+    // Tie
+    resultText = "It's a tie! No damage dealt.";
   }
 
-  document.getElementById('damageResult').textContent = `Damage: ${damage}`;
+  document.getElementById('damageResult').textContent = resultText;
 });
 
 initializeSections();

@@ -456,3 +456,16 @@ textarea {
     height: auto;
   }
 }
+
+/* === Fix for cramped text areas === */
+#textSection {
+  flex-grow: 1;
+  min-height: 60vh; /* makes the whole text section taller */
+}
+
+#input textarea,
+#output textarea {
+  height: 40vh; /* each gets decent space */
+  min-height: 300px; /* prevents being too short */
+  max-height: none;
+}

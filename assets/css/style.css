@@ -469,3 +469,21 @@ textarea {
   min-height: 300px; /* prevents being too short */
   max-height: none;
 }
+
+/* === Center HP tracker === */
+#hpTrackerSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* center children horizontally */
+  width: fit-content;        /* shrink to content width so margin auto works */
+  margin: 0 auto 20px;       /* center section in page, with bottom margin */
+}
+
+/* Center the controls row inside the HP tracker */
+#hpTrackerSection #hpTrackerControls,
+#hpTrackerSection .flexMe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; /* optional spacing between controls */
+}

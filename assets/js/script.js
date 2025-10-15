@@ -165,97 +165,92 @@ notesField.addEventListener("change", () => { localStorage.setItem(noteStorageTo
 // === HP Tracker (no max, but can’t go below 0) with “Set HP” ===
 
 document.addEventListener("DOMContentLoaded", () => {
-  const hpValue = document.getElementById("hpValue"); 
+  const hpValue = document.getElementById("hpValue");
   const hpPlus = document.getElementById("hpPlus");
   const hpMinus = document.getElementById("hpMinus");
   const hpSet = document.getElementById("hpSet");
   const hpBar = document.getElementById("hpBar");
 
-  console.log({ hpValue, hpPlus, hpMinus, hpSet, hpBar });
+  let currentHP = 0;
+  let maxHP = 0;
+  let hpInitialized = false;
 
-let currentHP = 0;
-let hpInitialized = false; // track whether “Set HP” was used
-
-// Load saved HP
-const saved = parseInt(localStorage.getItem(hpStorageToken), 10);
-if (!isNaN(saved) && saved >= 0) {
-  currentHP = saved;
-  hpInitialized = true;
-}
-
-// Function to update the bar & display
-function updateBar() {
-  // If not initialized yet, make bar width zero
-  if (!hpInitialized) {
-    hpBar.style.width = "0%";
-    hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
-    return;
+  // Restore saved values if present
+  const savedHP = parseInt(localStorage.getItem(hpStorageToken), 10);
+  const savedMax = parseInt(localStorage.getItem(hpStorageToken + "_max"), 10);
+  if (!isNaN(savedHP) && savedHP >= 0) {
+    currentHP = savedHP;
+    hpInitialized = true;
   }
-  // We need a method to decide percentage fill (since no max).
-  // One option: treat HP as a scale (e.g. first 100 HP “full bar”), or use log scale
-  const percent = Math.min(100, (Math.log10(currentHP + 1) / 2) * 100);
-  hpBar.style.width = `${percent}%`;
-
-  if (currentHP === 0) {
-    hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
-    hpBar.style.boxShadow = "0 0 5px #600000";
-  } else if (percent < 25) {
-    hpBar.style.background = "linear-gradient(90deg, #800000, #a00000)";
-    hpBar.style.boxShadow = "0 0 6px #a00000";
-  } else if (percent < 70) {
-    hpBar.style.background = "linear-gradient(90deg, #a04000, #c09020)";
-    hpBar.style.boxShadow = "0 0 8px #c09020";
-  } else {
-    hpBar.style.background = "linear-gradient(90deg, #c0a040, #ffe080)";
-    hpBar.style.boxShadow = "0 0 10px #ffe080";
+  if (!isNaN(savedMax) && savedMax > 0) {
+    maxHP = savedMax;
   }
-}
 
-// Function to update HP value & persist
-function updateHP(newHP) {
-  currentHP = Math.max(0, newHP);
-  hpValue.value = currentHP;
-  localStorage.setItem(hpStorageToken, currentHP);
-  updateBar();
-}
+  function updateBar() {
+    if (!hpBar) return;
+    if (!hpInitialized || maxHP <= 0) {
+      hpBar.style.width = "0%";
+      hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
+      hpBar.style.boxShadow = "none";
+      return;
+    }
+    let percent = (currentHP / maxHP) * 100;
+    if (percent > 100) percent = 100;
+    if (percent < 0) percent = 0;
+    hpBar.style.width = `${percent}%`;
 
-// Event: clicking “Set HP”
-if (hpSet) {
+    if (currentHP === 0) {
+      hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
+      hpBar.style.boxShadow = "0 0 5px #600000";
+    } else if (percent < 25) {
+      hpBar.style.background = "linear-gradient(90deg, #800000, #a00000)";
+      hpBar.style.boxShadow = "0 0 6px #a00000";
+    } else if (percent < 70) {
+      hpBar.style.background = "linear-gradient(90deg, #a04000, #c09020)";
+      hpBar.style.boxShadow = "0 0 8px #c09020";
+    } else {
+      hpBar.style.background = "linear-gradient(90deg, #c0a040, #ffe080)";
+      hpBar.style.boxShadow = "0 0 10px #ffe080";
+    }
+  }
+
+  function updateHP(newHP) {
+    currentHP = Math.max(0, newHP);
+    hpValue.value = currentHP;
+    localStorage.setItem(hpStorageToken, currentHP);
+    updateBar();
+  }
+
   hpSet.addEventListener("click", () => {
     const val = parseInt(hpValue.value, 10);
-    if (!isNaN(val) && val >= 0) {
+    if (!isNaN(val) && val > 0) {
+      maxHP = val;
+      currentHP = val;
       hpInitialized = true;
-      updateHP(val);
+      localStorage.setItem(hpStorageToken + "_max", maxHP);
+      updateHP(currentHP);
     }
   });
-}
 
-// Only allow plus/minus after initialization
-if (hpPlus) {
   hpPlus.addEventListener("click", () => {
     if (!hpInitialized) return;
     updateHP(currentHP + 1);
   });
-}
-if (hpMinus) {
+
   hpMinus.addEventListener("click", () => {
     if (!hpInitialized) return;
     updateHP(currentHP - 1);
   });
-}
 
-// Also update when manually typing (if initialized)
-if (hpValue) {
   hpValue.addEventListener("input", e => {
     if (!hpInitialized) return;
-    const val = parseInt(e.target.value, 10);
-    if (!isNaN(val)) {
-      updateHP(val);
+    const v = parseInt(e.target.value, 10);
+    if (!isNaN(v)) {
+      updateHP(v);
     }
   });
-}
-// initialize bar display
-updateBar();
+
+  updateBar();
 });
 
 initializeSections();

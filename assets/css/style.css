@@ -578,9 +578,9 @@ textarea {
 /* === Tracker Row Layout (HP + Damage Side by Side) === */
 .tracker-row {
   display: flex;
-  flex-wrap: wrap; /* allows stacking on small screens */
-  justify-content: center;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;      
+  align-items: center;          
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -593,4 +593,8 @@ textarea {
   padding: 1rem;
   box-sizing: border-box;
   color: var(--text-light);
+
+  display: flex;                
+  flex-direction: column;
+  justify-content: center;     
 }

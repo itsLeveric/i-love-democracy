@@ -163,7 +163,6 @@ notesField.value = localStorage.getItem(noteStorageToken);
 notesField.addEventListener("change", () => { localStorage.setItem(noteStorageToken, notesField.value); })
 
 // === HP Tracker (no max, but can’t go below 0) with “Set HP” ===
-
 document.addEventListener("DOMContentLoaded", () => {
   const hpValue = document.getElementById("hpValue");
   const hpPlus = document.getElementById("hpPlus");
@@ -175,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let maxHP = 0;
   let hpInitialized = false;
 
-  // Restore saved values if present
+  // Load saved
   const savedHP = parseInt(localStorage.getItem(hpStorageToken), 10);
   const savedMax = parseInt(localStorage.getItem(hpStorageToken + "_max"), 10);
   if (!isNaN(savedHP) && savedHP >= 0) {
@@ -186,17 +185,26 @@ document.addEventListener("DOMContentLoaded", () => {
     maxHP = savedMax;
   }
 
+  console.log("Loaded from storage:", { savedHP, savedMax, currentHP, maxHP, hpInitialized });
+
   function updateBar() {
-    if (!hpBar) return;
+    if (!hpBar) {
+      console.error("hpBar is null, cannot draw bar");
+      return;
+    }
     if (!hpInitialized || maxHP <= 0) {
       hpBar.style.width = "0%";
       hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
       hpBar.style.boxShadow = "none";
+      console.log("updateBar: not initialized or no maxHP, fallback. currentHP:", currentHP);
       return;
     }
     let percent = (currentHP / maxHP) * 100;
     if (percent > 100) percent = 100;
     if (percent < 0) percent = 0;
+
+    console.log("updateBar: using maxHP logic — percent:", percent, "currentHP:", currentHP, "maxHP:", maxHP);
+
     hpBar.style.width = `${percent}%`;
 
     if (currentHP === 0) {
@@ -216,33 +224,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateHP(newHP) {
     currentHP = Math.max(0, newHP);
-    hpValue.value = currentHP;
+    if (hpValue) {
+      hpValue.value = currentHP;
+    }
     localStorage.setItem(hpStorageToken, currentHP);
+    console.log("updateHP: set currentHP to", currentHP);
     updateBar();
   }
 
   hpSet.addEventListener("click", () => {
     const val = parseInt(hpValue.value, 10);
+    console.log("hpSet click, input value:", hpValue.value, "parsed:", val);
     if (!isNaN(val) && val > 0) {
       maxHP = val;
       currentHP = val;
       hpInitialized = true;
       localStorage.setItem(hpStorageToken + "_max", maxHP);
+      console.log("hpSet: new maxHP:", maxHP);
       updateHP(currentHP);
+    } else {
+      console.warn("hpSet click: invalid value", val);
     }
   });
 
   hpPlus.addEventListener("click", () => {
+    console.log("hpPlus click: hpInitialized:", hpInitialized, "currentHP:", currentHP);
     if (!hpInitialized) return;
     updateHP(currentHP + 1);
   });
 
   hpMinus.addEventListener("click", () => {
+    console.log("hpMinus click: hpInitialized:", hpInitialized, "currentHP:", currentHP);
     if (!hpInitialized) return;
     updateHP(currentHP - 1);
   });
 
   hpValue.addEventListener("input", e => {
+    console.log("hpValue input event:", e.target.value, "hpInitialized:", hpInitialized);
     if (!hpInitialized) return;
     const v = parseInt(e.target.value, 10);
     if (!isNaN(v)) {
@@ -250,6 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Initial draw
   updateBar();
 });
 

@@ -598,3 +598,11 @@ textarea {
   flex-direction: column;
   justify-content: center;     
 }
+
+.crit-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+}

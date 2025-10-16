@@ -275,27 +275,27 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById('calcDamageBtn').addEventListener('click', () => {
   const yourRoll = parseInt(document.getElementById('yourRoll').value) || 0;
   const enemyRoll = parseInt(document.getElementById('enemyRoll').value) || 0;
-  const crit = document.getElementById('critCheck').checked;
+  const playerCrit = document.getElementById('critCheckPlayer').checked;
+  const enemyCrit = document.getElementById('critCheckEnemy').checked;
 
   let damage = 0;
   let resultText = "";
 
-  // Determine who wins
   if (yourRoll > enemyRoll) {
     // Player wins
     damage = 1;
-    if (crit) damage += 1; // player crits
+    if (playerCrit) damage += 1;
     const diff = yourRoll - enemyRoll;
     damage += Math.floor(diff / 10);
-    resultText = `You deal ${damage} damage!`;
+    resultText = `🟥 You deal ${damage} damage!`;
   } else if (enemyRoll > yourRoll) {
     // Enemy wins
     damage = 1;
+    if (enemyCrit) damage += 1;
     const diff = enemyRoll - yourRoll;
     damage += Math.floor(diff / 10);
-    resultText = `Enemy deals ${damage} damage to you!`;
+    resultText = `🟦 Enemy deals ${damage} damage to you!`;
   } else {
-    // Tie
     resultText = "It's a tie! No damage dealt.";
   }
 

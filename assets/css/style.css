@@ -660,3 +660,98 @@ textarea {
   text-align: center;
   color: #ddd;
 }
+
+.tracker-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.tracker-card {
+  background-color: #111;
+  border: 1px solid #4a0b0b;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 0 10px #000;
+}
+
+.tracker-card h2 {
+  color: #f9d36c;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  text-shadow: 0 0 3px #000;
+}
+
+.hp-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hp-controls button {
+  background-color: #c19a3f;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hp-controls button:hover {
+  background-color: #e6c55f;
+}
+
+.hp-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: #2a0000;
+  border-radius: 8px;
+  margin-top: 0.6rem;
+}
+
+#hpBar {
+  height: 100%;
+  width: 100%;
+  background-color: #cc1c1c;
+  border-radius: 8px;
+  transition: width 0.3s ease-in-out;
+}
+
+.damage-inputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.damage-inputs input[type="number"] {
+  width: 70px;
+  text-align: center;
+}
+
+#calcDamageBtn {
+  background-color: #c19a3f;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#calcDamageBtn:hover {
+  background-color: #e6c55f;
+}
+
+#damageResult {
+  margin-top: 0.8rem;
+  color: #ddd;
+  font-size: 0.95rem;
+}
+

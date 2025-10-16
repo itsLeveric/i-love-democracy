@@ -4,51 +4,49 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SWTOR RP Helper</title>
+	<title>Imperial Ascension RP Helper</title>
 	<link rel="stylesheet" href="./assets/css/style.css" defer />
 </head>
 <body>
 	<h1>Imperial Ascension RP Helper</h1>
-<!-- HP Tracker -->
-<section id="hpSection" class="tracker-section">
-  <h2>HP Tracker</h2>
+<!-- HP Tracker + Damage Calculator Side-by-Side -->
+<section id="hpDamageSection" class="tracker-section">
+  <div class="tracker-container">
+    <!-- HP Tracker -->
+    <div class="tracker-card">
+      <h2>HP Tracker</h2>
+      <div class="hp-controls">
+        <button id="hpMinus">-</button>
+        <input type="number" id="hpValue" value="1" min="0">
+        <button id="hpPlus">+</button>
+        <button id="setHPBtn">Set HP</button>
+      </div>
+      <div class="hp-bar-container">
+        <div id="hpBar"></div>
+      </div>
+    </div>
 
-  <div id="hpTrackerControls" class="flexMe">
-    <button id="hpMinus" class="buttonSmall">−</button>
-    <input type="number" id="hpValue" placeholder="0" step="1" min="0" />
-    <button id="hpPlus" class="buttonSmall">+</button>
-    <button id="hpSet" class="buttonSmall">Set HP</button>
-  </div>
-
-  <div id="hpBarContainer">
-    <div id="hpBar"></div>
+    <!-- Damage Calculator -->
+    <div class="tracker-card">
+      <h2>Damage Calculator</h2>
+      <div class="damage-inputs">
+        <div>
+          <label>Your Roll</label>
+          <input type="number" id="yourRoll" placeholder="0">
+          <label><input type="checkbox" id="critCheckPlayer"> Crit</label>
+        </div>
+        <div>
+          <label>Enemy Roll</label>
+          <input type="number" id="enemyRoll" placeholder="0">
+          <label><input type="checkbox" id="critCheckEnemy"> Crit</label>
+        </div>
+      </div>
+      <button id="calcDamageBtn">Calculate</button>
+      <p id="damageResult">—</p>
+    </div>
   </div>
 </section>
-
-<!-- Damage Calculator (Compact + Separate) -->
-<section id="damageCalcCompact" class="tracker-section">
-  <h2>Damage Calculator</h2>
-
-  <div class="roll-inputs">
-    <div>
-      <label>Your Roll</label>
-      <input type="number" id="yourRoll" min="0" placeholder="e.g. 40">
-      <input type="checkbox" id="critCheckPlayer">
-      <label for="critCheckPlayer">Crit</label>
-    </div>
-    <div>
-      <label>Enemy Roll</label>
-      <input type="number" id="enemyRoll" min="0" placeholder="e.g. 11">
-      <input type="checkbox" id="critCheckEnemy">
-      <label for="critCheckEnemy">Crit</label>
-    </div>
-  </div>
-
-  <button id="calcDamageBtn" class="buttonSmall">Calculate</button>
-  <p id="damageResult" class="result-text">—</p>
-</section>
-
-
+<!-- Main Text Section -->
 	<section id="textSection">
   <div class="closeButton">
     <button type="button" class="buttonSmall">-</button>

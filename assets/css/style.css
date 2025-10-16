@@ -606,3 +606,36 @@ textarea {
   margin-top: 0.25rem;
   font-size: 0.9rem;
 }
+
+#hpDamageSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+#damageCalcCompact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#damageCalcCompact .roll-inputs {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+#damageCalcCompact input[type="number"] {
+  width: 70px;
+  text-align: center;
+}
+
+.result-text {
+  margin-top: 6px;
+  font-weight: bold;
+  text-align: center;
+}

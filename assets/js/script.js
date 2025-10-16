@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateBar();
 });
 
-// === Damage Calculator (with crit always doing 1 dmg) ===
+// === Compact Damage Calculator ===
 document.addEventListener("DOMContentLoaded", () => {
   const calcBtn = document.getElementById('calcDamageBtn');
   const resultEl = document.getElementById('damageResult');
@@ -219,45 +219,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const playerCrit = document.getElementById('critCheckPlayer').checked;
     const enemyCrit = document.getElementById('critCheckEnemy').checked;
 
-    let resultText = "";
     let playerDamage = 0;
     let enemyDamage = 0;
 
-    // === Normal win/loss logic ===
+    // Base roll logic
     if (yourRoll > enemyRoll) {
-      playerDamage = 1;
-      const diff = yourRoll - enemyRoll;
-      playerDamage += Math.floor(diff / 10);
+      playerDamage = 1 + Math.floor((yourRoll - enemyRoll) / 10);
       if (playerCrit) playerDamage += 1;
-      resultText = `🟥 You deal ${playerDamage} damage!`;
-    } 
-    else if (enemyRoll > yourRoll) {
-      enemyDamage = 1;
-      const diff = enemyRoll - yourRoll;
-      enemyDamage += Math.floor(diff / 10);
+    } else if (enemyRoll > yourRoll) {
+      enemyDamage = 1 + Math.floor((enemyRoll - yourRoll) / 10);
       if (enemyCrit) enemyDamage += 1;
-      resultText = `🟦 Enemy deals ${enemyDamage} damage to you!`;
-    } 
-    else {
-      resultText = "It's a tie! No damage dealt.";
     }
 
-    // === Crit override: crits always deal 1 dmg even if losing ===
-    if (playerCrit && enemyRoll >= yourRoll) {
-      playerDamage = Math.max(playerDamage, 1);
-      resultText += ` ⚔️ (Your crit still deals 1 damage!)`;
-    }
+    // Crits always deal 1 damage, even if they lose
+    if (playerCrit && enemyRoll >= yourRoll) playerDamage = Math.max(playerDamage, 1);
+    if (enemyCrit && yourRoll >= enemyRoll) enemyDamage = Math.max(enemyDamage, 1);
 
-    if (enemyCrit && yourRoll >= enemyRoll) {
-      enemyDamage = Math.max(enemyDamage, 1);
-      resultText += ` 💥 (Enemy crit still deals 1 damage!)`;
-    }
-
-    // === Display Result ===
-    if (playerDamage > 0 && enemyDamage > 0) {
-      resultEl.textContent = `🟥 You deal ${playerDamage} damage & 🟦 take ${enemyDamage} damage! (Crit trade!)`;
+    // Output summary
+    if (playerDamage === 0 && enemyDamage === 0) {
+      resultEl.textContent = "No damage dealt — tie!";
+    } else if (playerDamage > 0 && enemyDamage > 0) {
+      resultEl.textContent = `⚔️ You deal ${playerDamage} dmg • You take ${enemyDamage} dmg (Trade)`;
+    } else if (playerDamage > 0) {
+      resultEl.textContent = `🟥 You deal ${playerDamage} dmg`;
     } else {
-      resultEl.textContent = resultText;
+      resultEl.textContent = `🟦 You take ${enemyDamage} dmg`;
     }
   });
 });

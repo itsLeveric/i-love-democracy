@@ -147,26 +147,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (!isNaN(savedMax) && savedMax > 0) maxHP = savedMax;
 
-  function updateBar() {
-    if (!hpBar) return;
-    if (!hpInitialized || maxHP <= 0) {
-      hpBar.style.width = "0%";
-      hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
-      return;
-    }
-    let percent = (currentHP / maxHP) * 100;
-    percent = Math.max(0, Math.min(100, percent));
-    hpBar.style.width = `${percent}%`;
-
-    // color gradient by HP%
-    if (percent <= 25) {
-      hpBar.style.background = "linear-gradient(90deg, #800000, #a00000)";
-    } else if (percent <= 60) {
-      hpBar.style.background = "linear-gradient(90deg, #a04000, #c09020)";
-    } else {
-      hpBar.style.background = "linear-gradient(90deg, #40a040, #80ff80)";
-    }
+function updateBar() {
+  if (!hpBar) return;
+  if (!hpInitialized || maxHP <= 0) {
+    hpBar.style.width = "0%";
+    hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
+    return;
   }
+
+  let percent = (currentHP / maxHP) * 100;
+  percent = Math.max(0, Math.min(100, percent));
+  hpBar.style.width = `${percent}%`;
+
+  // Change color based on HP %
+  if (percent > 70) {
+    hpBar.style.background = "linear-gradient(90deg, #4caf50, #8bc34a)"; // Green
+  } else if (percent > 40) {
+    hpBar.style.background = "linear-gradient(90deg, #ffeb3b, #fbc02d)"; // Yellow
+  } else if (percent > 15) {
+    hpBar.style.background = "linear-gradient(90deg, #ff9800, #f57c00)"; // Orange
+  } else {
+    hpBar.style.background = "linear-gradient(90deg, #f44336, #b71c1c)"; // Red
+  }
+}
 
   function updateHP(newHP) {
     currentHP = Math.max(0, newHP);
@@ -244,9 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (playerCrit) playerDamage = Math.max(playerDamage, 1);
     if (enemyCrit) enemyDamage = Math.max(enemyDamage, 1);
 
-    // Apply enemy damage to HP
-    if (enemyDamage > 0) updateHP(currentHP - enemyDamage);
-
     // Build output text
     if (playerDamage === 0 && enemyDamage === 0) {
       resultEl.textContent = "No damage dealt — it's a tie!";
@@ -259,5 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
 initializeSections();

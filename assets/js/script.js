@@ -206,10 +206,20 @@ document.addEventListener("DOMContentLoaded", () => {
   updateBar();
 });
 
-// === Damage Calculator (separate + full crit logic) ===
+// === Damage Calculator (with dual-hit + crit logic) ===
 document.addEventListener("DOMContentLoaded", () => {
   const calcBtn = document.getElementById('calcDamageBtn');
   const resultEl = document.getElementById('damageResult');
+  const hpValue = document.getElementById('hpValue');
+  let currentHP = parseInt(localStorage.getItem("SWTORHP")) || 0;
+
+  function updateHP(newHP) {
+    currentHP = Math.max(0, newHP);
+    hpValue.value = currentHP;
+    localStorage.setItem("SWTORHP", currentHP);
+    const event = new Event("input");
+    hpValue.dispatchEvent(event); // Refresh HP bar
+  }
 
   if (!calcBtn || !resultEl) return;
 
@@ -222,41 +232,33 @@ document.addEventListener("DOMContentLoaded", () => {
     let playerDamage = 0;
     let enemyDamage = 0;
 
-    // --- Core Roll Outcome ---
+    // Determine base results
     if (yourRoll > enemyRoll) {
-      // You win the roll
       playerDamage = 1 + Math.floor((yourRoll - enemyRoll) / 10);
       if (playerCrit) playerDamage += 1;
     } else if (enemyRoll > yourRoll) {
-      // Enemy wins the roll
       enemyDamage = 1 + Math.floor((enemyRoll - yourRoll) / 10);
       if (enemyCrit) enemyDamage += 1;
+    } else {
+      // tie: no base damage
     }
 
-    // --- Crit Guarantee Damage ---
-    if (playerCrit && yourRoll <= enemyRoll) {
-      // You crit but lost → still deal 1
-      playerDamage = Math.max(playerDamage, 1);
-    }
-    if (enemyCrit && enemyRoll <= yourRoll) {
-      // Enemy crit but lost → still deals 1
-      enemyDamage = Math.max(enemyDamage, 1);
-    }
+    // Crits always deal at least 1 damage, even if you lose the roll
+    if (playerCrit) playerDamage = Math.max(playerDamage, 1);
+    if (enemyCrit) enemyDamage = Math.max(enemyDamage, 1);
 
-    // --- Result Display ---
-    resultEl.classList.remove("flash-red", "flash-blue");
+    // Apply enemy damage to HP
+    if (enemyDamage > 0) updateHP(currentHP - enemyDamage);
 
+    // Compose the result message
     if (playerDamage === 0 && enemyDamage === 0) {
       resultEl.textContent = "No damage dealt — tie!";
     } else if (playerDamage > 0 && enemyDamage > 0) {
-      resultEl.textContent = `⚔️ You deal ${playerDamage} dmg • You take ${enemyDamage} dmg (Crit trade!)`;
-      resultEl.classList.add("flash-red", "flash-blue");
+      resultEl.textContent = `⚔️ You deal ${playerDamage} damage but take ${enemyDamage} damage!`;
     } else if (playerDamage > 0) {
-      resultEl.textContent = `🟥 You deal ${playerDamage} dmg`;
-      resultEl.classList.add("flash-red");
+      resultEl.textContent = `🟥 You deal ${playerDamage} damage!`;
     } else {
-      resultEl.textContent = `🟦 You take ${enemyDamage} dmg`;
-      resultEl.classList.add("flash-blue");
+      resultEl.textContent = `🟦 You take ${enemyDamage} damage!`;
     }
   });
 });

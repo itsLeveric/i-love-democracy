@@ -27,28 +27,31 @@
   </section>
 
   <!-- Damage Calculator Section -->
-<div class="damage-inputs">
-  <div class="input-group">
-    <label for="yourRoll">Your Roll Total</label>
-    <input type="number" id="yourRoll" min="0" placeholder="e.g. 40">
-    <div class="crit-toggle">
-      <input type="checkbox" id="critCheckPlayer">
-      <label for="critCheckPlayer">Your Crit</label>
-    </div>
-  </div>
+  <section id="damageCalc" class="tracker-section">
+    <h3>Damage Calculator</h3>
 
-  <div class="input-group">
-    <label for="enemyRoll">Enemy Roll Total</label>
-    <input type="number" id="enemyRoll" min="0" placeholder="e.g. 11">
-    <div class="crit-toggle">
-      <input type="checkbox" id="critCheckEnemy">
-      <label for="critCheckEnemy">Enemy Crit</label>
-    </div>
-  </div>
-</div>
+    <div class="damage-inputs">
+      <div class="input-group">
+        <label for="yourRoll">Your Roll Total</label>
+        <input type="number" id="yourRoll" min="0" placeholder="e.g. 40">
+        <div class="crit-toggle">
+          <input type="checkbox" id="critCheckPlayer">
+          <label for="critCheckPlayer">Your Crit</label>
+        </div>
+      </div>
 
-		<button id="calcDamageBtn" class="buttonSmall">Calculate Damage</button>
-	<p id="damageResult" class="result-text">Damage: —</p>
+      <div class="input-group">
+        <label for="enemyRoll">Enemy Roll Total</label>
+        <input type="number" id="enemyRoll" min="0" placeholder="e.g. 11">
+        <div class="crit-toggle">
+          <input type="checkbox" id="critCheckEnemy">
+          <label for="critCheckEnemy">Enemy Crit</label>
+        </div>
+      </div>
+    </div>
+
+    <button id="calcDamageBtn" class="buttonSmall">Calculate Damage</button>
+    <p id="damageResult" class="result-text">Damage: —</p>
   </section>
 </div>
 

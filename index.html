@@ -9,11 +9,10 @@
 </head>
 <body>
 	<h1>Imperial Ascension RP Helper</h1>
-<!-- HP Tracker + Damage Calculator (Compact Layout) -->
-<section id="hpDamageSection" class="tracker-section">
-  <h2>HP & Damage Tracker</h2>
+<!-- HP Tracker -->
+<section id="hpSection" class="tracker-section">
+  <h2>HP Tracker</h2>
 
-  <!-- HP Controls -->
   <div id="hpTrackerControls" class="flexMe">
     <button id="hpMinus" class="buttonSmall">−</button>
     <input type="number" id="hpValue" placeholder="0" step="1" min="0" />
@@ -24,27 +23,31 @@
   <div id="hpBarContainer">
     <div id="hpBar"></div>
   </div>
-
-  <!-- Damage Calculator (Compact) -->
-  <div id="damageCalcCompact">
-    <div class="roll-inputs">
-      <div>
-        <label>Your Roll</label>
-        <input type="number" id="yourRoll" min="0" placeholder="e.g. 40">
-        <input type="checkbox" id="critCheckPlayer">
-        <label for="critCheckPlayer">Crit</label>
-      </div>
-      <div>
-        <label>Enemy Roll</label>
-        <input type="number" id="enemyRoll" min="0" placeholder="e.g. 11">
-        <input type="checkbox" id="critCheckEnemy">
-        <label for="critCheckEnemy">Crit</label>
-      </div>
-    </div>
-    <button id="calcDamageBtn" class="buttonSmall">Calc Damage</button>
-    <p id="damageResult" class="result-text">—</p>
-  </div>
 </section>
+
+<!-- Damage Calculator (Compact + Separate) -->
+<section id="damageCalcCompact" class="tracker-section">
+  <h2>Damage Calculator</h2>
+
+  <div class="roll-inputs">
+    <div>
+      <label>Your Roll</label>
+      <input type="number" id="yourRoll" min="0" placeholder="e.g. 40">
+      <input type="checkbox" id="critCheckPlayer">
+      <label for="critCheckPlayer">Crit</label>
+    </div>
+    <div>
+      <label>Enemy Roll</label>
+      <input type="number" id="enemyRoll" min="0" placeholder="e.g. 11">
+      <input type="checkbox" id="critCheckEnemy">
+      <label for="critCheckEnemy">Crit</label>
+    </div>
+  </div>
+
+  <button id="calcDamageBtn" class="buttonSmall">Calculate</button>
+  <p id="damageResult" class="result-text">—</p>
+</section>
+
 
 	<section id="textSection">
   <div class="closeButton">

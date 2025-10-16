@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateBar();
 });
 
-// === Compact Damage Calculator ===
+// === Damage Calculator (separate + full crit logic) ===
 document.addEventListener("DOMContentLoaded", () => {
   const calcBtn = document.getElementById('calcDamageBtn');
   const resultEl = document.getElementById('damageResult');
@@ -222,28 +222,41 @@ document.addEventListener("DOMContentLoaded", () => {
     let playerDamage = 0;
     let enemyDamage = 0;
 
-    // Base roll logic
+    // --- Core Roll Outcome ---
     if (yourRoll > enemyRoll) {
+      // You win the roll
       playerDamage = 1 + Math.floor((yourRoll - enemyRoll) / 10);
       if (playerCrit) playerDamage += 1;
     } else if (enemyRoll > yourRoll) {
+      // Enemy wins the roll
       enemyDamage = 1 + Math.floor((enemyRoll - yourRoll) / 10);
       if (enemyCrit) enemyDamage += 1;
     }
 
-    // Crits always deal 1 damage, even if they lose
-    if (playerCrit && enemyRoll >= yourRoll) playerDamage = Math.max(playerDamage, 1);
-    if (enemyCrit && yourRoll >= enemyRoll) enemyDamage = Math.max(enemyDamage, 1);
+    // --- Crit Guarantee Damage ---
+    if (playerCrit && yourRoll <= enemyRoll) {
+      // You crit but lost → still deal 1
+      playerDamage = Math.max(playerDamage, 1);
+    }
+    if (enemyCrit && enemyRoll <= yourRoll) {
+      // Enemy crit but lost → still deals 1
+      enemyDamage = Math.max(enemyDamage, 1);
+    }
 
-    // Output summary
+    // --- Result Display ---
+    resultEl.classList.remove("flash-red", "flash-blue");
+
     if (playerDamage === 0 && enemyDamage === 0) {
       resultEl.textContent = "No damage dealt — tie!";
     } else if (playerDamage > 0 && enemyDamage > 0) {
-      resultEl.textContent = `⚔️ You deal ${playerDamage} dmg • You take ${enemyDamage} dmg (Trade)`;
+      resultEl.textContent = `⚔️ You deal ${playerDamage} dmg • You take ${enemyDamage} dmg (Crit trade!)`;
+      resultEl.classList.add("flash-red", "flash-blue");
     } else if (playerDamage > 0) {
       resultEl.textContent = `🟥 You deal ${playerDamage} dmg`;
+      resultEl.classList.add("flash-red");
     } else {
       resultEl.textContent = `🟦 You take ${enemyDamage} dmg`;
+      resultEl.classList.add("flash-blue");
     }
   });
 });

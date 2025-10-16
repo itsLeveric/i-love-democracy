@@ -158,14 +158,13 @@ document.addEventListener("DOMContentLoaded", () => {
     percent = Math.max(0, Math.min(100, percent));
     hpBar.style.width = `${percent}%`;
 
-    if (currentHP === 0) {
-      hpBar.style.background = "linear-gradient(90deg, #400000, #600000)";
-    } else if (percent < 25) {
+    // color gradient by HP%
+    if (percent <= 25) {
       hpBar.style.background = "linear-gradient(90deg, #800000, #a00000)";
-    } else if (percent < 70) {
+    } else if (percent <= 60) {
       hpBar.style.background = "linear-gradient(90deg, #a04000, #c09020)";
     } else {
-      hpBar.style.background = "linear-gradient(90deg, #c0a040, #ffe080)";
+      hpBar.style.background = "linear-gradient(90deg, #40a040, #80ff80)";
     }
   }
 
@@ -206,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateBar();
 });
 
-// === Damage Calculator (with dual-hit + crit logic) ===
+// === Damage Calculator (enhanced dual-hit + crit logic) ===
 document.addEventListener("DOMContentLoaded", () => {
   const calcBtn = document.getElementById('calcDamageBtn');
   const resultEl = document.getElementById('damageResult');
@@ -218,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hpValue.value = currentHP;
     localStorage.setItem("SWTORHP", currentHP);
     const event = new Event("input");
-    hpValue.dispatchEvent(event); // Refresh HP bar
+    hpValue.dispatchEvent(event); // refresh HP bar
   }
 
   if (!calcBtn || !resultEl) return;
@@ -232,33 +231,31 @@ document.addEventListener("DOMContentLoaded", () => {
     let playerDamage = 0;
     let enemyDamage = 0;
 
-    // Determine base results
+    // Base damage by roll comparison
     if (yourRoll > enemyRoll) {
       playerDamage = 1 + Math.floor((yourRoll - enemyRoll) / 10);
       if (playerCrit) playerDamage += 1;
     } else if (enemyRoll > yourRoll) {
       enemyDamage = 1 + Math.floor((enemyRoll - yourRoll) / 10);
       if (enemyCrit) enemyDamage += 1;
-    } else {
-      // tie: no base damage
     }
 
-    // Crits always deal at least 1 damage, even if you lose the roll
+    // Crits always deal at least 1 damage even if losing
     if (playerCrit) playerDamage = Math.max(playerDamage, 1);
     if (enemyCrit) enemyDamage = Math.max(enemyDamage, 1);
 
     // Apply enemy damage to HP
     if (enemyDamage > 0) updateHP(currentHP - enemyDamage);
 
-    // Compose the result message
+    // Build output text
     if (playerDamage === 0 && enemyDamage === 0) {
-      resultEl.textContent = "No damage dealt — tie!";
+      resultEl.textContent = "No damage dealt — it's a tie!";
     } else if (playerDamage > 0 && enemyDamage > 0) {
       resultEl.textContent = `⚔️ You deal ${playerDamage} damage but take ${enemyDamage} damage!`;
     } else if (playerDamage > 0) {
       resultEl.textContent = `🟥 You deal ${playerDamage} damage!`;
     } else {
-      resultEl.textContent = `🟦 You take ${enemyDamage} damage!`;
+      resultEl.textContent = `🟦 Enemy deals ${enemyDamage} damage to you!`;
     }
   });
 });

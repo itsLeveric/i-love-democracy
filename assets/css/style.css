@@ -754,4 +754,89 @@ textarea {
   color: #ddd;
   font-size: 0.95rem;
 }
+/* --- Layout for HP + Damage Section --- */
+.stat-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.tracker-card {
+  background: rgba(30, 30, 30, 0.9);
+  border: 1px solid #555;
+  border-radius: 10px;
+  padding: 15px;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.tracker-card h3 {
+  margin-top: 0;
+  font-size: 1.2em;
+  color: #ffcc66;
+  border-bottom: 1px solid #666;
+  padding-bottom: 5px;
+}
+
+/* --- HP Tracker --- */
+.hp-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.hp-controls input {
+  width: 70px;
+  padding: 4px;
+  text-align: center;
+}
+
+.hp-controls button {
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.hp-bar-container {
+  width: 100%;
+  height: 20px;
+  background: #222;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#hpBar {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+/* --- Damage Calculator --- */
+.dmg-inputs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.roll-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.roll-column input[type="number"] {
+  width: 60px;
+  text-align: center;
+}
+
+.damage-result {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ffcc66;
+}
 

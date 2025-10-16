@@ -9,17 +9,18 @@
 </head>
 <body>
 	<h1>Imperial Ascension RP Helper</h1>
-<!-- HP Tracker + Damage Calculator Side-by-Side -->
+<!-- HP Tracker + Damage Calculator Section -->
 <section id="hpDamageSection" class="tracker-section">
-  <div class="tracker-container">
+  <div class="stat-row">
+    
     <!-- HP Tracker -->
     <div class="tracker-card">
-      <h2>HP Tracker</h2>
+      <h3>HP Tracker</h3>
       <div class="hp-controls">
+        <input type="number" id="hpValue" placeholder="Set Max HP" />
+        <button id="hpSet">Set HP</button>
         <button id="hpMinus">-</button>
-        <input type="number" id="hpValue" value="1" min="0">
         <button id="hpPlus">+</button>
-        <button id="setHPBtn">Set HP</button>
       </div>
       <div class="hp-bar-container">
         <div id="hpBar"></div>
@@ -28,22 +29,23 @@
 
     <!-- Damage Calculator -->
     <div class="tracker-card">
-      <h2>Damage Calculator</h2>
-      <div class="damage-inputs">
-        <div>
-          <label>Your Roll</label>
-          <input type="number" id="yourRoll" placeholder="0">
-          <label><input type="checkbox" id="critCheckPlayer"> Crit</label>
+      <h3>Damage Calculator</h3>
+      <div class="dmg-inputs">
+        <div class="roll-column">
+          <label>Your Roll:</label>
+          <input type="number" id="yourRoll" />
+          <label><input type="checkbox" id="critCheckPlayer" /> Crit</label>
         </div>
-        <div>
-          <label>Enemy Roll</label>
-          <input type="number" id="enemyRoll" placeholder="0">
-          <label><input type="checkbox" id="critCheckEnemy"> Crit</label>
+        <div class="roll-column">
+          <label>Enemy Roll:</label>
+          <input type="number" id="enemyRoll" />
+          <label><input type="checkbox" id="critCheckEnemy" /> Crit</label>
         </div>
       </div>
       <button id="calcDamageBtn">Calculate</button>
-      <p id="damageResult">—</p>
+      <div id="damageResult" class="damage-result">—</div>
     </div>
+
   </div>
 </section>
 <!-- Main Text Section -->
